@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: tests
+
+on:
+  push:
+    branches: [scaffold-helpers, main]
+  pull_request:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      # The helpers are stdlib-only, so the standalone suite needs no deps and
+      # no ram-coffers checkout. The 3 e2e tests that need the core skip cleanly
+      # when RAM_COFFERS is unset (see tests/test_config_roundtrip.py).
+      - name: Run unit tests
+        run: python3 -m unittest discover -s tests -v
