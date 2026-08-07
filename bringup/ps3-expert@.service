@@ -1,0 +1,38 @@
+# systemd template unit: one PS3 = one expert worker.
+#
+# Install as /etc/systemd/system/ps3-expert@.service on each console (OtherOS /
+# exploited Linux with systemd). The instance name is "<layer>-<expert>", e.g.:
+#
+#   systemctl enable --now ps3-expert@3-0.service
+#
+# Environment (edit /etc/ps3-expert.env, see bringup/ps3-expert.env.example):
+#   EXPERT_BIN   path to the deployable C worker (build/expert_node_host) OR the
+#                reference worker python3 .../tools/run_expert.py
+#   EXPERT_DIR   directory holding this console's packed L<layer>-E<expert>.exp
+#   EXPERT_PORT  TCP port to listen on (default 9000)
+#
+# This unit runs the C worker if EXPERT_BIN points at it; swap ExecStart for the
+# reference worker line below when validating without the SPE/RSX toolchain.
+
+[Unit]
+Description=Kimi-K3 PS3 expert worker (layer %i)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/ps3-expert.env
+# C worker (real hardware): expert_node_host <expert.exp> <port>
+ExecStart=/bin/sh -c 'exec "$EXPERT_BIN" "$EXPERT_DIR/L$(echo %i | cut -d- -f1)-E$(echo %i | cut -d- -f2).exp" "$EXPERT_PORT"'
+# Reference worker (no toolchain): uncomment and set EXPERT_BIN=python3
+# ExecStart=/bin/sh -c 'exec "$EXPERT_BIN" "$RAM_COFFERS/tools/run_expert.py" "$EXPERT_DIR/L$(echo %i | cut -d- -f1)-E$(echo %i | cut -d- -f2).exp" --host 0.0.0.0 --port "$EXPERT_PORT"'
+Restart=on-failure
+RestartSec=2
+# The worker leaves its accept loop cleanly on SIGTERM.
+KillSignal=SIGTERM
+TimeoutStopSec=30
+# 256 MB XDR is the whole machine; fail fast rather than thrash into swap.
+OOMPolicy=kill
+
+[Install]
+WantedBy=multi-user.target

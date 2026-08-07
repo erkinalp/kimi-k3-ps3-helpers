@@ -1,0 +1,19 @@
+# Fleet inventory: one row per console. This is the single source of truth for
+# cluster.json, Wake-on-LAN, and out-of-band power maps.
+#
+# Columns:
+#   layer        decoder layer this console serves
+#   expert       expert index within that layer (0-based)
+#   host         console IP/hostname reachable by its head server
+#   port         TCP port the expert worker listens on
+#   mac          NIC MAC address (for Wake-on-LAN)
+#   rack         rack id (free-form, e.g. r01)
+#   slot         chassis/slot id within the rack (e.g. c3-s2)
+#   pdu          out-of-band power controller id (e.g. pdu-r01-a)
+#   pdu_outlet   outlet number on that controller
+#   cech         motherboard/SKU revision (e.g. CECHL, for qualification)
+layer,expert,host,port,mac,rack,slot,pdu,pdu_outlet,cech
+3,0,10.0.0.10,9000,00:1f:a7:00:00:10,r01,c1-s1,pdu-r01-a,1,CECHL
+3,1,10.0.0.11,9000,00:1f:a7:00:00:11,r01,c1-s2,pdu-r01-a,2,CECHL
+3,2,10.0.0.12,9000,00:1f:a7:00:00:12,r01,c1-s3,pdu-r01-a,3,CECHL
+3,3,10.0.0.13,9000,00:1f:a7:00:00:13,r01,c1-s4,pdu-r01-a,4,CECHP
