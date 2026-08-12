@@ -8,8 +8,10 @@ This repo is deliberately the *PS3-specific* half of the project. `ram-coffers`
 holds the portable core — the P3XC protocol, the coordinators (subcluster /
 region / layer), the dispatcher, dedup, topology/config, and the numpy
 reference worker — all of which build anywhere with a C compiler and CPython and
-retarget to newer servers of the same hardware lineage at build time. Everything
-that only makes sense on a PS3 (or on a physical farm of them) lives here:
+retarget to newer servers of the same hardware lineage at build time. That core
+is merged on the `kimi-k3-playstation3` branch of `ram-coffers` (PR #1), which is
+what these helpers target. Everything that only makes sense on a PS3 (or on a
+physical farm of them) lives here:
 
 - console **bring-up** (a deployable expert-worker service + OtherOS/CFW notes),
 - **deployment** helpers (inventory-driven `cluster.json`, start scripts,

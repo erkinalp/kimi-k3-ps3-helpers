@@ -1,8 +1,10 @@
 # P3XC contract (mirror)
 
 This is a **read-only mirror** of the contract owned by
-[`ram-coffers`](https://github.com/erkinalp/ram-coffers). It exists so the
-helpers in this repo can be understood standalone. The authoritative source is
+[`ram-coffers`](https://github.com/erkinalp/ram-coffers), pinned to the merged
+coordination core on the `kimi-k3-playstation3` branch (PR #1, merge commit
+`eb71e56`). It exists so the helpers in this repo can be understood standalone.
+The authoritative source is
 `ram-coffers/ps3-cluster/ps3_cluster/protocol.py`,
 `ps3_cluster/batch.py`, and `ps3_cluster/deployment.py`. **If this file
 disagrees with those, they win.**

@@ -17,8 +17,8 @@ whole-fleet destructive refusal).
 
 ## End-to-end against ram-coffers (loopback, no hardware)
 
-With `RAM_COFFERS` pointing at a `ram-coffers/ps3-cluster` checkout
-(commit `0ee3158`):
+With `RAM_COFFERS` pointing at a `ram-coffers/ps3-cluster` checkout of the merged
+`kimi-k3-playstation3` branch (PR #1, merge commit `eb71e56`):
 
 ```
 RAM_COFFERS=.../ps3-cluster python3 -m unittest discover -s tests
